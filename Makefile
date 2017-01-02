@@ -35,6 +35,7 @@ CC          = $(CROSS)gcc
 OBJCOPY     = $(CROSS)objcopy
 OBJDUMP     = $(CROSS)objdump
 SIZE        = $(CROSS)size
+OPENOCD     = openocd
 
 # CPU flags
 CPU_FLAGS   = -mcpu=$(ARCH) -mthumb
@@ -189,6 +190,9 @@ help:
 	@echo "- all:     Build executable"
 	@echo "- clean:   Clean the workspace and remove old builds"
 	@echo "- help:    Display this help"
+	@echo "Using OpenOCD:"
+	@echo "- upload:  Upload elf to chip"
+	@echo "- reset: Restart the chip"
 
 # Clean environment
 clean:
@@ -201,6 +205,13 @@ lss: $(ELF)
 	@$(call log_info,Create lss from elf)
 	@$(OBJDUMP) --section-headers --file-headers --disassemble --demangle --line-numbers --source --syms --section=.text --wide $(ELF) > $(LSS)
 	@$(call log_ok)
+
+# OpenOCD / AtmelICE
+upload: $(ELF)
+	$(OPENOCD) -f openocd.cfg -c "program $(ELF) verify reset exit"
+
+reset:
+	$(OPENOCD) -f openocd.cfg -c 'init; reset; exit'
 
 # Build specific
 directories:
