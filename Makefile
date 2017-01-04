@@ -13,18 +13,20 @@
 # CLOCK ........ Target SAM clock rate in Hertz
 
 #######################################
+-include $(wildcard Makefile.make)
+
+#######################################
 BINARY       = starter
 BUILD_DIR    = build
 SOURCES_DIR  = src
-OBJECTS_DIR  = $(BUILD_DIR)/obj
 
 # Device, 8 MHz
-DEVICE       = samd20j15
-ARCH         = cortex-m0plus
-CLOCK        = 8000000
+DEVICE       ?= samd20j15
+ARCH         ?= cortex-m0plus
+CLOCK        ?= 8000000
 
-OPTIMIZATION = s
-DEBUG_LEVEL  = 3
+OPTIMIZATION ?= s
+DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
@@ -36,6 +38,9 @@ OBJCOPY     = $(CROSS)objcopy
 OBJDUMP     = $(CROSS)objdump
 SIZE        = $(CROSS)size
 OPENOCD     = openocd
+
+# Objects dir
+OBJECTS_DIR = $(BUILD_DIR)/obj
 
 # CPU flags
 CPU_FLAGS   = -mcpu=$(ARCH) -mthumb
