@@ -224,12 +224,6 @@ directories:
 	@mkdir -p $(DIRECTORIES) $(BUILD_DIR)
 	@$(call log_ok)
 
-$(OBJECTS): $(OBJECTS_DIR)/%.o : $(SOURCES_DIR)/%.c
-	@$(call log_info,Compiling $<)
-	@$(COL_ERROR)
-	@$(CC) $(CC_FLAGS) -c $< -o $@
-	@$(call log_ok)
-
 $(ELF): $(OBJECTS)
 	@echo
 	@$(call log_info,Linking $(ELF))
