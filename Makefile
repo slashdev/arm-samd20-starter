@@ -13,6 +13,9 @@
 # CLOCK ........ Target SAM clock rate in Hertz
 
 #######################################
+-include $(wildcard Makefile.make)
+
+#######################################
 BINARY       = starter
 BUILD_DIR    = build
 SOURCES_DIR  = src
