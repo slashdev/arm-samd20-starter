@@ -19,7 +19,6 @@
 BINARY       = starter
 BUILD_DIR    = build
 SOURCES_DIR  = src
-OBJECTS_DIR  = $(BUILD_DIR)/obj
 
 # Device, 8 MHz
 DEVICE       = samd20j15
@@ -39,6 +38,9 @@ OBJCOPY     = $(CROSS)objcopy
 OBJDUMP     = $(CROSS)objdump
 SIZE        = $(CROSS)size
 OPENOCD     = openocd
+
+# Objects dir
+OBJECTS_DIR = $(BUILD_DIR)/obj
 
 # CPU flags
 CPU_FLAGS   = -mcpu=$(ARCH) -mthumb
