@@ -21,12 +21,12 @@ BUILD_DIR    = build
 SOURCES_DIR  = src
 
 # Device, 8 MHz
-DEVICE       = samd20j15
-ARCH         = cortex-m0plus
-CLOCK        = 8000000
+DEVICE       ?= samd20j15
+ARCH         ?= cortex-m0plus
+CLOCK        ?= 8000000
 
-OPTIMIZATION = s
-DEBUG_LEVEL  = 3
+OPTIMIZATION ?= s
+DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
