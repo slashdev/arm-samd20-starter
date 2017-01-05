@@ -179,6 +179,7 @@ ELF         = $(BUILD_DIR)/$(BINARY).elf
 HEX         = $(BUILD_DIR)/$(BINARY).hex
 BIN         = $(BUILD_DIR)/$(BINARY).bin
 LSS         = $(BUILD_DIR)/$(BINARY).lss
+MAP         = $(BUILD_DIR)/$(BINARY).map
 
 log_info = $(COL_RESET); printf "$(1) "
 log_ok   = $(COL_RESET); printf "["; $(COL_INFO); printf "OK"; $(COL_RESET); printf "]\n"
@@ -202,7 +203,7 @@ help:
 # Clean environment
 clean:
 	@$(call log_info,"Cleaning...")
-	@rm -rf $(ELF) $(HEX) $(BIN) $(LSS) $(OBJECTS_DIR)
+	@rm -rf $(ELF) $(HEX) $(BIN) $(LSS) $(MAP) $(OBJECTS_DIR)
 	@$(call log_ok)
 
 # Use disasm for debugging
