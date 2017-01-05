@@ -35,11 +35,22 @@
 #include "hal_gpio.h"
 
 //-----------------------------------------------------------------------------
-HAL_GPIO_PIN(LED, A, 14)
+HAL_GPIO_PIN(LED, A, 14);
+
+//-----------------------------------------------------------------------------
+static void sys_init(void)
+{
+  // Switch to 8MHz clock (disable prescaler)
+  SYSCTRL->OSC8M.bit.PRESC = 0;
+
+  // Enable interrupts
+  asm volatile ("cpsie i");
+}
 
 //-----------------------------------------------------------------------------
 int main(void)
 {
+  sys_init();
   // Set LED GPIO as output
   HAL_GPIO_LED_out();
   // Turn on the LED

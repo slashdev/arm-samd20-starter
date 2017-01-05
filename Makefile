@@ -13,18 +13,20 @@
 # CLOCK ........ Target SAM clock rate in Hertz
 
 #######################################
-BINARY       = starter
-BUILD_DIR    = build
-SOURCES_DIR  = src
-OBJECTS_DIR  = $(BUILD_DIR)/obj
+-include $(wildcard Makefile.make)
+
+#######################################
+BINARY       ?= starter
+BUILD_DIR    ?= build
+SOURCES_DIR  ?= src
 
 # Device, 8 MHz
-DEVICE       = samd20j15
-ARCH         = cortex-m0plus
-CLOCK        = 8000000
+DEVICE       ?= samd20j15
+ARCH         ?= cortex-m0plus
+CLOCK        ?= 8000000
 
-OPTIMIZATION = s
-DEBUG_LEVEL  = 3
+OPTIMIZATION ?= s
+DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
@@ -36,6 +38,9 @@ OBJCOPY     = $(CROSS)objcopy
 OBJDUMP     = $(CROSS)objdump
 SIZE        = $(CROSS)size
 OPENOCD     = openocd
+
+# Objects dir
+OBJECTS_DIR = $(BUILD_DIR)/obj
 
 # CPU flags
 CPU_FLAGS   = -mcpu=$(ARCH) -mthumb
@@ -174,6 +179,7 @@ ELF         = $(BUILD_DIR)/$(BINARY).elf
 HEX         = $(BUILD_DIR)/$(BINARY).hex
 BIN         = $(BUILD_DIR)/$(BINARY).bin
 LSS         = $(BUILD_DIR)/$(BINARY).lss
+MAP         = $(BUILD_DIR)/$(BINARY).map
 
 log_info = $(COL_RESET); printf "$(1) "
 log_ok   = $(COL_RESET); printf "["; $(COL_INFO); printf "OK"; $(COL_RESET); printf "]\n"
@@ -197,7 +203,7 @@ help:
 # Clean environment
 clean:
 	@$(call log_info,"Cleaning...")
-	@rm -rf $(ELF) $(HEX) $(BIN) $(LSS) $(OBJECTS_DIR)
+	@rm -rf $(ELF) $(HEX) $(BIN) $(LSS) $(MAP) $(OBJECTS_DIR)
 	@$(call log_ok)
 
 # Use disasm for debugging
@@ -217,12 +223,6 @@ reset:
 directories:
 	@$(call log_info,Create directories in \'$(OBJECTS_DIR)\')
 	@mkdir -p $(DIRECTORIES) $(BUILD_DIR)
-	@$(call log_ok)
-
-$(OBJECTS): $(OBJECTS_DIR)/%.o : $(SOURCES_DIR)/%.c
-	@$(call log_info,Compiling $<)
-	@$(COL_ERROR)
-	@$(CC) $(CC_FLAGS) -c $< -o $@
 	@$(call log_ok)
 
 $(ELF): $(OBJECTS)
