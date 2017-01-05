@@ -16,9 +16,9 @@
 -include $(wildcard Makefile.make)
 
 #######################################
-BINARY       = starter
-BUILD_DIR    = build
-SOURCES_DIR  = src
+BINARY       ?= starter
+BUILD_DIR    ?= build
+SOURCES_DIR  ?= src
 
 # Device, 8 MHz
 DEVICE       ?= samd20j15
