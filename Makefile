@@ -30,7 +30,7 @@ DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
-.PHONY: lc uc all rebuild help clean lss upload reset directories size
+.PHONY: lc uc all clear rebuild help clean lss upload reset directories size
 
 CROSS       = arm-none-eabi-
 CC          = $(CROSS)gcc
@@ -158,6 +158,7 @@ LD_FLAGS   += -Wl,--entry=irq_handler_reset
 LD_FLAGS   += -Wl,--script=linker/$(DEVICE).ld
 
 INCLUDES   += -Iinclude
+INCLUDES   += -Isrc
 
 DEFINES    += -D__$(call uc,$(DEVICE))__
 DEFINES    += -DDONT_USE_CMSIS_INIT
@@ -187,8 +188,12 @@ log_ok   = $(COL_RESET); printf "["; $(COL_INFO); printf "OK"; $(COL_RESET); pri
 # Build executable
 all: directories $(ELF) $(HEX) $(LSS) $(BIN) size
 
+# Clear screen
+clear:
+	@clear
+
 # Cleans and builds everything
-rebuild: clean all
+rebuild: clear clean all
 
 # Help, explains usage
 help:
@@ -213,7 +218,7 @@ lss: $(ELF)
 	@$(call log_ok)
 
 # OpenOCD / AtmelICE
-upload: $(ELF)
+upload: rebuild
 	$(OPENOCD) -f openocd.cfg -c "program $(ELF) verify reset exit"
 
 reset:
