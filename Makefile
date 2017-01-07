@@ -158,6 +158,7 @@ LD_FLAGS   += -Wl,--entry=irq_handler_reset
 LD_FLAGS   += -Wl,--script=linker/$(DEVICE).ld
 
 INCLUDES   += -Iinclude
+INCLUDES   += -Isrc
 
 DEFINES    += -D__$(call uc,$(DEVICE))__
 DEFINES    += -DDONT_USE_CMSIS_INIT
