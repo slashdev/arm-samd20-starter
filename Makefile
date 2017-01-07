@@ -218,7 +218,7 @@ lss: $(ELF)
 	@$(call log_ok)
 
 # OpenOCD / AtmelICE
-upload: $(ELF)
+upload: rebuild
 	$(OPENOCD) -f openocd.cfg -c "program $(ELF) verify reset exit"
 
 reset:
