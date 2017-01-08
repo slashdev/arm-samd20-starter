@@ -260,7 +260,8 @@ size: $(ELF)
 	@$(COL_INFO)
 	@echo Size:
 	@$(COL_BUILD)
-	@$(SIZE) --totals $(ELF)
+	@$(SIZE) --format=sysv --totals $(ELF)
+	@$(SIZE) --format=berkley --totals $(ELF)
 	@$(COL_RESET)
 
 %.o:
