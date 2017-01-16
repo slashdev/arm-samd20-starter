@@ -96,6 +96,7 @@ extern void logger_cstring(const char *string);
 extern void logger_number_(uint32_t value, uint8_t base);
 #define logger_number(x) logger_number_(x, 10)
 #define logger_number_as_hex(x) logger_number_(x, 16)
+#define logger_number_as_bin(x) logger_number_(x, 2)
 #define logger_newline() logger_cstring(logger_newline)
 #define logger_dot() logger_cstring(logger_dot)
 #define logger_ok() logger_cstring(logger_ok)
@@ -112,6 +113,7 @@ extern void logger_number_(uint32_t value, uint8_t base);
 #define logger_number_(...) do {} while (0)
 #define logger_number(...) do {} while (0)
 #define logger_number_as_hex(...) do {} while (0)
+#define logger_number_as_bin(...) do {} while (0)
 #define logger_newline(...) do {} while (0)
 #define logger_dot(...) do {} while (0)
 #define logger_ok(...) do {} while (0)
