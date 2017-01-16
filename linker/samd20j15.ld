@@ -58,6 +58,7 @@ MEMORY
 
 /* The stack size used by the application. NOTE: you need to adjust according to your application. */
 STACK_SIZE = DEFINED(STACK_SIZE) ? STACK_SIZE : DEFINED(__stack_size__) ? __stack_size__ : 0x400;
+HEAP_SIZE  = DEFINED(HEAP_SIZE) ? HEAP_SIZE : DEFINED(__heap_size__) ? __heap_size__ : 0x0;
 
 /* Section Definitions */
 SECTIONS
@@ -153,6 +154,16 @@ SECTIONS
         . = . + STACK_SIZE;
         . = ALIGN(8);
         _estack = .;
+    } > ram
+
+    /* heap section */
+    .heap (NOLOAD):
+    {
+        . = ALIGN(8);
+        _sheap = .;
+        . = . + HEAP_SIZE;
+        . = ALIGN(8);
+        _eheap = .;
     } > ram
 
     . = ALIGN(4);
