@@ -81,6 +81,9 @@ extern unsigned int _szero;
 extern unsigned int _ezero;
 extern unsigned int _sstack;
 extern unsigned int _estack;
+extern unsigned int _sheap;
+extern unsigned int _eheap;
+extern unsigned int _end;
 
 //-----------------------------------------------------------------------------
 __attribute__ ((used, section(".vectors")))
