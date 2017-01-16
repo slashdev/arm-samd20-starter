@@ -133,7 +133,7 @@ LD_FLAGS   += -Wl,-Map=$(BUILD_DIR)/$(BINARY).map,--cref
 # By adding -specs=nano.specs to the gcc link command, a reduced-size
 # libc is linked in (libc_nano). The effect of this on the final
 # program size is significant.
-LD_FLAGS   += --specs=nano.specs
+LD_FLAGS   += --specs=nosys.specs --specs=nano.specs
 
 # There are many library functions provided in common source files.
 # All code and data is currently linked into every executable, and
