@@ -32,7 +32,7 @@ void logger_cstring(const char *s)
   }
 }
 
-void logger_number_(uint32_t value, uint8_t base)
+void logger_number_(uint32_t value, uint8_t base, uint8_t padding)
 {
   /* Create buffer */
   char buffer[8*sizeof(uint32_t)+1];
@@ -53,7 +53,13 @@ void logger_number_(uint32_t value, uint8_t base)
     value /= base;          /* Calc divider */
     c = tmp - base * value; /* Get digit */
     *--str = c < 10 ? '0' + c : 'A' + c - 10;
+    if (padding > 0) {
+      padding--;
+    }
   } while (value);
+
+  // Do we need to add padding?
+  for (; padding > 0; padding--, logger_char('0'));
 
   /* Send string */
   logger_string(str);
