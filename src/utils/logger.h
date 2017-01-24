@@ -93,10 +93,11 @@ extern void logger_usart_queue(char c);
 #define logger_char(x) logger_usart_queue(x)
 extern void logger_string(char *string);
 extern void logger_cstring(const char *string);
-extern void logger_number_(uint32_t value, uint8_t base);
-#define logger_number(x) logger_number_(x, 10)
-#define logger_number_as_hex(x) logger_number_(x, 16)
-#define logger_number_as_bin(x) logger_number_(x, 2)
+extern void logger_number_(uint32_t value, uint8_t base, uint8_t padding);
+#define logger_number(x) logger_number_(x, 10, 0)
+#define logger_number_as_hex(x) logger_number_(x, 16, 0)
+#define logger_number_as_bin(x) logger_number_(x, 2, 0)
+#define logger_number_as_bin_padded(x, y) logger_number_(x, 2, y)
 #define logger_newline() logger_cstring(logger_newline)
 #define logger_dot() logger_cstring(logger_dot)
 #define logger_ok() logger_cstring(logger_ok)
