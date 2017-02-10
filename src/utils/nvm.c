@@ -360,7 +360,7 @@ enum status_code nvm_update_buffer(
     row_buffer[page_in_row][offset + i] = buffer[i];
   }
 
-  system_interrupt_enter_critical_section();
+  cpu_irq_enter_critical();
 
   /* Erase the row */
   do
@@ -369,7 +369,7 @@ enum status_code nvm_update_buffer(
   } while (error_code == STATUS_BUSY);
 
   if (error_code != STATUS_OK) {
-    system_interrupt_leave_critical_section();
+    cpu_irq_leave_critical();
     return error_code;
   }
 
@@ -383,12 +383,12 @@ enum status_code nvm_update_buffer(
     } while (error_code == STATUS_BUSY);
 
     if (error_code != STATUS_OK) {
-      system_interrupt_leave_critical_section();
+      cpu_irq_leave_critical();
       return error_code;
     }
   }
 
-  system_interrupt_leave_critical_section();
+  cpu_irq_leave_critical();
 
   return error_code;
 }
