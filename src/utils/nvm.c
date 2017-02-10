@@ -192,6 +192,7 @@ enum status_code nvm_execute_command(
     const uint32_t address,
     const uint32_t parameter)
 {
+  (void)parameter;
   uint32_t ctrlb_bak;
 
   /* Check that the address given is valid  */
