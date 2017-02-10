@@ -943,16 +943,17 @@ enum status_code nvm_get_fuses (
 {
   enum status_code error_code = STATUS_OK;
   uint32_t raw_fusebits[2];
+  uint16_t *raw16_fusebits = (uint16_t*)raw_fusebits;
 
   /* Make sure the module is ready */
   while (!nvm_is_ready()) {
   }
 
   /* Read the fuse settings in the user row, 64 bit */
-  ((uint16_t*)&raw_fusebits)[0] = (uint16_t)NVM_MEMORY[NVMCTRL_USER / 2];
-  ((uint16_t*)&raw_fusebits)[1] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 1];
-  ((uint16_t*)&raw_fusebits)[2] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 2];
-  ((uint16_t*)&raw_fusebits)[3] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 3];
+  raw16_fusebits[0] = (uint16_t)NVM_MEMORY[NVMCTRL_USER / 2];
+  raw16_fusebits[1] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 1];
+  raw16_fusebits[2] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 2];
+  raw16_fusebits[3] = (uint16_t)NVM_MEMORY[(NVMCTRL_USER / 2) + 3];
 
   _nvm_translate_raw_fusebits_to_struct(raw_fusebits, fusebits);
 
