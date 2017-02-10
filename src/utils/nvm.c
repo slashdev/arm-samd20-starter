@@ -100,9 +100,6 @@ static struct _nvm_module _nvm_dev;
 enum status_code nvm_set_config(
     const struct nvm_config *const config)
 {
-  /* Sanity check argument */
-  Assert(config);
-
   /* Get a pointer to the module hardware instance */
   Nvmctrl *const nvm_module = NVMCTRL;
 
@@ -685,9 +682,6 @@ enum status_code nvm_erase_row(
 void nvm_get_parameters(
     struct nvm_parameters *const parameters)
 {
-  /* Sanity check parameters */
-  Assert(parameters);
-
   /* Get a pointer to the module hardware instance */
   Nvmctrl *const nvm_module = NVMCTRL;
 
@@ -758,10 +752,6 @@ bool nvm_is_page_locked(uint16_t page_number)
 {
   uint16_t pages_in_region;
   uint16_t region_number;
-
-#ifdef FEATURE_NVM_RWWEE
-  Assert(page_number < _nvm_dev.number_of_pages);
-#endif
 
   /* Get a pointer to the module hardware instance */
   Nvmctrl *const nvm_module = NVMCTRL;

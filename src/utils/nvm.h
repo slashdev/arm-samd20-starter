@@ -716,9 +716,6 @@ struct nvm_fusebits {
 static inline void nvm_get_config_defaults(
     struct nvm_config *const config)
 {
-  /* Sanity check the parameters */
-  Assert(config);
-
   /* Write the default configuration for the NVM configuration */
   config->sleep_power_mode  = NVM_SLEEP_POWER_MODE_WAKEONACCESS;
   config->manual_page_write = true;

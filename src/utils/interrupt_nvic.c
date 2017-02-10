@@ -67,9 +67,6 @@ void cpu_irq_enter_critical(void)
 
 void cpu_irq_leave_critical(void)
 {
-  /* Check if the user is trying to leave a critical section when not in a critical section */
-  Assert(cpu_irq_critical_section_counter > 0);
-
   cpu_irq_critical_section_counter--;
 
   /* Only enable global interrupts when the counter reaches 0 and the state of the global interrupt flag
