@@ -111,7 +111,7 @@ enum status_code nvm_set_config(
   system_apb_clock_set_mask(SYSTEM_CLOCK_APB_APBB, MCLK_APBBMASK_NVMCTRL);
 #else
   /* Turn on the digital interface clock */
-  system_apb_clock_set_mask(SYSTEM_CLOCK_APB_APBB, PM_APBBMASK_NVMCTRL);
+  PM->APBBMASK.reg |= PM_APBBMASK_NVMCTRL;
 #endif
 
   /* Clear error flags */
