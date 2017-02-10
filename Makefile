@@ -22,6 +22,7 @@ SOURCES_DIR  ?= src
 
 # Device, 8 MHz
 DEVICE       ?= samd20j15
+FAMILY       ?= samd20
 ARCH         ?= cortex-m0plus
 CLOCK        ?= 8000000
 
@@ -30,7 +31,7 @@ DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
-.PHONY: lc uc all clear rebuild help clean lss upload reset directories size
+.PHONY: lc uc all clear rebuild watch help clean lss upload reset directories size
 
 CROSS       = arm-none-eabi-
 CC          = $(CROSS)gcc
@@ -161,6 +162,7 @@ INCLUDES   += -Iinclude
 INCLUDES   += -Isrc
 
 DEFINES    += -D__$(call uc,$(DEVICE))__
+DEFINES    += -D$(call uc,$(FAMILY))
 DEFINES    += -DDONT_USE_CMSIS_INIT
 DEFINES    += -DF_CPU=$(CLOCK)
 
@@ -195,6 +197,12 @@ clear:
 # Cleans and builds everything
 rebuild: clear clean all
 
+# Watch the current directory and rebuild when a file changes
+watch:
+	@clear
+	@echo "Watching current directory for changes"
+	@fswatch --recursive --event Updated --exclude build --one-per-batch ./include/ ./linker/ ./src/  | xargs -n1 -I{} make rebuild
+
 # Help, explains usage
 help:
 	@echo "Usage:"
@@ -218,7 +226,7 @@ lss: $(ELF)
 	@$(call log_ok)
 
 # OpenOCD / AtmelICE
-upload: rebuild
+upload:
 	$(OPENOCD) -f openocd.cfg -c "program $(ELF) verify reset exit"
 
 reset:
