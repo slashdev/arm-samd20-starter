@@ -44,7 +44,7 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 
-#include "interrupt_sam_nvic.h"
+#include "interrupt_nvic.h"
 
 #if !defined(__DOXYGEN__)
 /* Deprecated - global flag to determine the global interrupt state. Required by

@@ -44,9 +44,6 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include "nvm.h"
-#include <system.h>
-#include <system_interrupt.h>
-#include <string.h>
 
 /**
  * \internal Internal device instance struct

@@ -47,8 +47,10 @@
 #ifndef UTILS_INTERRUPT_INTERRUPT_H
 #define UTILS_INTERRUPT_INTERRUPT_H
 
-#include <compiler.h>
-#include <parts.h>
+#include <stdbool.h>
+#include "core_cmFunc.h"
+#include "core_cmInstr.h"
+#include "samd20.h"
 
 #ifdef __cplusplus
 extern "C" {

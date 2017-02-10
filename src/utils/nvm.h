@@ -264,9 +264,12 @@
  * @{
  */
 
-#include <compiler.h>
-#include <status_codes.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include "interrupt_nvic.h"
+#include "samd20.h"
+#include "status_codes.h"
 
 #ifdef __cplusplus
 extern "C" {

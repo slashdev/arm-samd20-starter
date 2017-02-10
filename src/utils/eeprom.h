@@ -327,7 +327,10 @@
 extern "C" {
 #endif
 
-#include <compiler.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include "nvm.h"
 
 #if !defined(__DOXYGEN__)
 #  define EEPROM_MAX_PAGES            (64 * NVMCTRL_ROW_PAGES)
