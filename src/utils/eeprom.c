@@ -58,6 +58,16 @@
  */
 #define EEPROM_MAGIC_KEY_COUNT           3
 
+/**
+ * \def barrier
+ * \brief Memory barrier
+ */
+#ifdef __GNUC__
+#  define barrier() asm volatile("" ::: "memory")
+#else
+#  define barrier() asm ("")
+#endif
+
 #pragma pack(1)
 /**
  * \internal
