@@ -31,7 +31,7 @@ DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
-.PHONY: lc uc all clear rebuild help clean lss upload reset directories size
+.PHONY: lc uc all clear rebuild watch help clean lss upload reset directories size
 
 CROSS       = arm-none-eabi-
 CC          = $(CROSS)gcc
@@ -196,6 +196,12 @@ clear:
 
 # Cleans and builds everything
 rebuild: clear clean all
+
+# Watch the current directory and rebuild when a file changes
+watch:
+	@clear
+	@echo "Watching current directory for changes"
+	@fswatch --recursive --event Updated --exclude build --one-per-batch ./include/ ./linker/ ./src/  | xargs -n1 -I{} make rebuild
 
 # Help, explains usage
 help:
