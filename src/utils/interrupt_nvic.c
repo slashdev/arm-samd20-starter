@@ -46,14 +46,6 @@
 
 #include "interrupt_nvic.h"
 
-#if !defined(__DOXYGEN__)
-/* Deprecated - global flag to determine the global interrupt state. Required by
- * QTouch library, however new applications should use cpu_irq_is_enabled()
- * which probes the true global interrupt state from the CPU special registers.
- */
-volatile bool g_interrupt_enabled = true;
-#endif
-
 void cpu_irq_enter_critical(void)
 {
   if (cpu_irq_critical_section_counter == 0) {

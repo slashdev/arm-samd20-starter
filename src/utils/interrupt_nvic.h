@@ -128,7 +128,6 @@ extern "C" {
 
 #  define cpu_irq_enable()                     \
   do {                                       \
-    g_interrupt_enabled = true;            \
     __DMB();                               \
     __enable_irq();                        \
   } while (0)
@@ -136,14 +135,9 @@ extern "C" {
   do {                                       \
     __disable_irq();                       \
     __DMB();                               \
-    g_interrupt_enabled = false;           \
   } while (0)
 
 typedef uint32_t irqflags_t;
-
-#if !defined(__DOXYGEN__)
-extern volatile bool g_interrupt_enabled;
-#endif
 
 #define cpu_irq_is_enabled()    (__get_PRIMASK() == 0)
 
