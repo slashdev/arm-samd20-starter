@@ -58,7 +58,7 @@
  */
 #define EEPROM_MAGIC_KEY_COUNT           3
 
-COMPILER_PACK_SET(1);
+#pragma pack(1)
 /**
  * \internal
  * \brief Structure describing the EEPROM Emulation master page.
@@ -96,7 +96,7 @@ struct _eeprom_page {
   /** Data content of the EEPROM page. */
   uint8_t data[EEPROM_PAGE_SIZE];
 };
-COMPILER_PACK_RESET();
+#pragma pack()
 
 /**
  * \internal
