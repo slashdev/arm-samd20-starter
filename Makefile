@@ -22,6 +22,7 @@ SOURCES_DIR  ?= src
 
 # Device, 8 MHz
 DEVICE       ?= samd20j15
+FAMILY       ?= samd20
 ARCH         ?= cortex-m0plus
 CLOCK        ?= 8000000
 
@@ -161,6 +162,7 @@ INCLUDES   += -Iinclude
 INCLUDES   += -Isrc
 
 DEFINES    += -D__$(call uc,$(DEVICE))__
+DEFINES    += -D$(call uc,$(FAMILY))
 DEFINES    += -DDONT_USE_CMSIS_INIT
 DEFINES    += -DF_CPU=$(CLOCK)
 
