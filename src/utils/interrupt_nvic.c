@@ -46,6 +46,9 @@
 
 #include "interrupt_nvic.h"
 
+static volatile uint8_t cpu_irq_critical_section_counter;
+static volatile bool    cpu_irq_prev_interrupt_state;
+
 void cpu_irq_enter_critical(void)
 {
   if (cpu_irq_critical_section_counter == 0) {
