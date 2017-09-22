@@ -37,55 +37,55 @@
     pmux, sercom, tx_pad, rx_pad,                                             \
     tx_port, tx_pin, rx_port, rx_pin                                          \
   )                                                                           \
-  HAL_GPIO_PIN(LOGGER_TX, tx_port, tx_pin); \
-  HAL_GPIO_PIN(LOGGER_RX, rx_port, rx_pin); \
-  \
-  void logger_usart_queue(char c) \
-  { \
-    while (!(SERCOM##sercom->USART.INTFLAG.reg & SERCOM_USART_INTFLAG_DRE)); \
-    SERCOM##sercom->USART.DATA.reg = c; \
-  } \
-  \
-  static inline void logger_init(uint32_t baud) \
-  { \
-    /* Set TX as output */ \
-    HAL_GPIO_LOGGER_TX_out(); \
-    HAL_GPIO_LOGGER_TX_pmuxen(PORT_PMUX_PMUXE_##pmux##_Val); \
-    /* Set RX as input */ \
-    HAL_GPIO_LOGGER_RX_in(); \
-    HAL_GPIO_LOGGER_RX_pmuxen(PORT_PMUX_PMUXE_##pmux##_Val); \
-    \
-    /* Enable clock for peripheral, without prescaler */ \
-    PM->APBCMASK.reg |= PM_APBCMASK_SERCOM##sercom; \
-    GCLK->CLKCTRL.reg = \
-      GCLK_CLKCTRL_ID(SERCOM##sercom##_GCLK_ID_CORE) | \
-      GCLK_CLKCTRL_CLKEN | \
-      GCLK_CLKCTRL_GEN(0); \
-    \
-    SERCOM##sercom->USART.CTRLA.reg = \
-      SERCOM_USART_CTRLA_DORD | \
-      SERCOM_USART_CTRLA_MODE_USART_INT_CLK | \
+  HAL_GPIO_PIN(LOGGER_TX, tx_port, tx_pin);                                   \
+  HAL_GPIO_PIN(LOGGER_RX, rx_port, rx_pin);                                   \
+                                                                              \
+  void logger_usart_queue(char c)                                             \
+  {                                                                           \
+    while (!(SERCOM##sercom->USART.INTFLAG.reg & SERCOM_USART_INTFLAG_DRE));  \
+    SERCOM##sercom->USART.DATA.reg = c;                                       \
+  }                                                                           \
+                                                                              \
+  static inline void logger_init(uint32_t baud)                               \
+  {                                                                           \
+    /* Set TX as output */                                                    \
+    HAL_GPIO_LOGGER_TX_out();                                                 \
+    HAL_GPIO_LOGGER_TX_pmuxen(PORT_PMUX_PMUXE_##pmux##_Val);                  \
+    /* Set RX as input */                                                     \
+    HAL_GPIO_LOGGER_RX_in();                                                  \
+    HAL_GPIO_LOGGER_RX_pmuxen(PORT_PMUX_PMUXE_##pmux##_Val);                  \
+                                                                              \
+    /* Enable clock for peripheral, without prescaler */                      \
+    PM->APBCMASK.reg |= PM_APBCMASK_SERCOM##sercom;                           \
+    GCLK->CLKCTRL.reg =                                                       \
+      GCLK_CLKCTRL_ID(SERCOM##sercom##_GCLK_ID_CORE) |                        \
+      GCLK_CLKCTRL_CLKEN |                                                    \
+      GCLK_CLKCTRL_GEN(0);                                                    \
+                                                                              \
+    SERCOM##sercom->USART.CTRLA.reg =                                         \
+      SERCOM_USART_CTRLA_DORD |                                               \
+      SERCOM_USART_CTRLA_MODE_USART_INT_CLK |                                 \
       SERCOM_USART_CTRLA_TXPO_PAD##tx_pad |                                   \
-      SERCOM_USART_CTRLA_RXPO(rx_pad); \
-    \
-    SERCOM##sercom->USART.CTRLB.reg = \
-      SERCOM_USART_CTRLB_RXEN | \
-      SERCOM_USART_CTRLB_TXEN | \
-      SERCOM_USART_CTRLB_CHSIZE(0/*8 bits*/); \
-    \
-    uint64_t br = (uint64_t)65536 * (F_CPU - 16 * baud) / F_CPU; \
-    SERCOM##sercom->USART.BAUD.reg = (uint16_t)br; \
-    \
-    /* Enable the peripheral */ \
-    SERCOM##sercom->USART.CTRLA.reg |= SERCOM_USART_CTRLA_ENABLE; \
-    \
-    /* Send hello message */ \
-    logger_cstring(logger_newline); \
-    logger_cstring(logger_hello);   \
-    logger_cstring(logger_newline); \
-    logger_cstring(logger_newline); \
-  } \
-  \
+      SERCOM_USART_CTRLA_RXPO(rx_pad);                                        \
+                                                                              \
+    SERCOM##sercom->USART.CTRLB.reg =                                         \
+      SERCOM_USART_CTRLB_RXEN |                                               \
+      SERCOM_USART_CTRLB_TXEN |                                               \
+      SERCOM_USART_CTRLB_CHSIZE(0/*8 bits*/);                                 \
+                                                                              \
+    uint64_t br = (uint64_t)65536 * (F_CPU - 16 * baud) / F_CPU;              \
+    SERCOM##sercom->USART.BAUD.reg = (uint16_t)br;                            \
+                                                                              \
+    /* Enable the peripheral */                                               \
+    SERCOM##sercom->USART.CTRLA.reg |= SERCOM_USART_CTRLA_ENABLE;             \
+                                                                              \
+    /* Send hello message */                                                  \
+    logger_cstring(logger_newline);                                           \
+    logger_cstring(logger_hello);                                             \
+    logger_cstring(logger_newline);                                           \
+    logger_cstring(logger_newline);                                           \
+  }                                                                           \
+                                                                              \
 
 extern const char logger_hello[];
 extern const char logger_newline[];
