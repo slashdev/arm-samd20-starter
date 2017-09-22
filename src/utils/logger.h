@@ -12,12 +12,12 @@
  * LOGGER_BUILD(sercom, tx_port, tx_pin, rx_port, rx_pin, rx_pad)
  * - pmux:    the PMUX channel you'd like to use (e.g. C)
  * - sercom:  the SERCOM interface number you'd like to use (e.g. 3)
+ * - tx_pad:  the PAD to use for TX input on the SERCOM interface (e.g. 2)
+ * - rx_pad:  the PAD to use for RX input on the SERCOM interface (e.g. 1)
  * - tx_port: the PORT of the TX output (e.g. A)
  * - tx_pin:  the PIN of the TX output (e.g. 14)
  * - rx_port: the PORT of the RX input (e.g. A)
  * - rx_pin:  the PIN of the RX input (e.g. 15)
- * - rx_pad:  the PAD to use for RX input on the SERCOM interface
- *     (e.g. 1, see datasheet)
  *
  *  Before you can use the logger functions, initialize the logger
  *  using `logger_init(baudrate);`.
@@ -33,7 +33,10 @@
 
 #include <stdint.h>
 
-#define LOGGER_BUILD(pmux, sercom, tx_port, tx_pin, rx_port, rx_pin, rx_pad) \
+#define LOGGER_BUILD(                                                         \
+    pmux, sercom, tx_pad, rx_pad,                                             \
+    tx_port, tx_pin, rx_port, rx_pin                                          \
+  )                                                                           \
   HAL_GPIO_PIN(LOGGER_TX, tx_port, tx_pin); \
   HAL_GPIO_PIN(LOGGER_RX, rx_port, rx_pin); \
   \
@@ -62,7 +65,7 @@
     SERCOM##sercom->USART.CTRLA.reg = \
       SERCOM_USART_CTRLA_DORD | \
       SERCOM_USART_CTRLA_MODE_USART_INT_CLK | \
-      SERCOM_USART_CTRLA_TXPO | \
+      SERCOM_USART_CTRLA_TXPO_PAD##tx_pad |                                   \
       SERCOM_USART_CTRLA_RXPO(rx_pad); \
     \
     SERCOM##sercom->USART.CTRLB.reg = \
