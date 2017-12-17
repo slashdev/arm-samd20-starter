@@ -155,8 +155,11 @@ LD_FLAGS   += -Wl,--gc-sections
 # file are not permitted.
 LD_FLAGS   += -Wl,--entry=irq_handler_reset
 
+# Add linker directory to search for linker scripts.
+LD_FLAGS   += -Wl,--library-path=linker/
+
 # Use script as the linker script.
-LD_FLAGS   += -Wl,--script=linker/$(DEVICE).ld
+LD_FLAGS   += -Wl,--script=$(DEVICE).ld
 
 INCLUDES   += -Iinclude
 INCLUDES   += -Isrc
