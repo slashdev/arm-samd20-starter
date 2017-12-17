@@ -31,7 +31,7 @@ DEBUG_LEVEL  ?= 3
 
 #######################################
 # Tune the lines below only if you know what you are doing:
-.PHONY: lc uc all clear rebuild watch help clean lss upload reset directories size
+.PHONY: lc uc all clear rebuild watch help clean lss upload reset directories size lint
 
 CROSS       = arm-none-eabi-
 CC          = $(CROSS)gcc
@@ -39,6 +39,7 @@ OBJCOPY     = $(CROSS)objcopy
 OBJDUMP     = $(CROSS)objdump
 SIZE        = $(CROSS)size
 OPENOCD     = openocd
+OCLINT      = oclint
 
 # Objects dir
 OBJECTS_DIR = $(BUILD_DIR)/obj
@@ -231,6 +232,9 @@ upload:
 
 reset:
 	$(OPENOCD) -f openocd.cfg -c 'init; reset; exit'
+
+lint:
+	$(OCLINT) -no-analytics $(SOURCES) -- $(CC_FLAGS)
 
 # Build specific
 directories:
