@@ -36,3 +36,7 @@ spare row and the other two can be used for pages.
 
 Then you can call `eeprom_init();` in your `main` to initialize the eeprom. The allowed values for
 `eeprom_size` can be found in `utils/nvm.h`.
+
+# Linting
+
+If you want to lint the project make sure you have [OCLint](http://oclint.org/) installed and available in your `PATH` environment variable.
